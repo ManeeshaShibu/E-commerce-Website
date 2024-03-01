@@ -1,0 +1,103 @@
+<header>
+  <!-- NavBar -->
+  <nav class="navbar navbar-expand-lg navbar-light nav-yellow border-bottom border-top p-0">
+    <div class="container">
+      <a class="navbar-brand fs-4 fw-bold" routerLink="/products">
+        <i class="fa fa-shoe-prints"></i>
+        <span class="textBlur">SoleStride</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0  text-center ">
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle fw-semibold text-uppercase  me-1 text-danger" href="#"
+              id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              home
+            </a>
+            <ul class="dropdown-menu  " aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item " routerLink="/products">Products</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle redHover fw-semibold text-uppercase text-black  me-1" href="#"
+              id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              About Us
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="#">Overview</a></li>
+              <li><a class="dropdown-item" href="#">Careers</a></li>
+              <li><a class="dropdown-item" href="#">Terms and Conditions</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link fw-semibold text-uppercase text-black  me-1" href="#">Contact us</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fa-fa-search fs-5" style="color: #0c0d0d;"></i></a>
+          </li>
+          <!-- cart -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              <i class="fa fa-cart-plus fs-5 me-1" style="color: #202122;"></i>
+              <span class="badge rounded-pill text-bg-info position-absolute top-5 start-75 translate-middle">{{ getUniqueProductCount() }}</span>
+            </a>
+            <ul class="dropdown-menu menuOnLeft rounded-0 mt-2" aria-labelledby="navbarDropdown3">
+              <ng-container *ngIf="cartItems.length != 0; else emptyCart">
+                <li class="p-2" *ngFor="let item of getUniqueCartItems()">
+                  <div class="d-flex w-100 border-bottom justify-content-between align-items-center">
+                    <div>
+                      <img style="height: 80px !important;" class="img-fluid p-2" [src]="item.item.thumbnail"
+                        alt="{{ item.item.title }}">
+                    </div>
+                    <div>
+                      <h6>{{ item.item.title }}</h6>
+                      <p>Price: ${{ item.item.price }}
+                      Qty: {{ item.count }}</p>
+                  </div>
+                    <button class="btn btn-sm btn-danger" (click)="removeFromCart(item.item, $event)">Remove</button>
+                  </div>
+                </li>
+                <li class="p-2">
+                  <div class="w-100 ">
+                    <div class="d-flex justify-content-between">
+                      <h6>Total Price :</h6>
+                      <h6>${{ calculateTotalPrice() }}</h6>
+                    </div>
+                    <div class="d-flex justify-content-evenly mt-2">
+                      <button class="btn btn-dark rounded-0 px-3">View Cart</button>
+                      <a routerLink="/checkout"> <button class="btn btn-danger rounded-0 px-3">Checkout</button></a>
+                    </div>
+                  </div>
+                </li>
+              </ng-container>
+              <ng-template #emptyCart>
+                <li class="p-2">
+                  <div class="w-100 text-center">
+                    <h6>Cart Is Empty</h6>
+                  </div>
+                </li>
+              </ng-template>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle redHover fw-semibold text-uppercase text-black  me-1" href="#"
+              id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fa fa-user fs-5 me-1" style="color: #202122;"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"> </a>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+<router-outlet></router-outlet>

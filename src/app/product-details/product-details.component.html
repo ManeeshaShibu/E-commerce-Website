@@ -1,0 +1,63 @@
+<div *ngIf="isLoading" class="product-details-container">
+    <p>Loading...</p>
+</div>
+
+<div *ngIf="!isLoading && product" class="product-details-container">
+    <div class="product-image">
+        <img [src]="product.thumbnail" alt="{{ product.title }} Image">
+    </div>
+    <div class="product-details">
+        <h2>{{ product.title }}</h2>
+        <p>{{ product.description }}</p>
+        <p class="price">Price: <span class="price-value">${{ product.price }}</span></p>
+        <p>Discount Percentage: {{ product.discountPercentage }}%</p>
+        <p>Rating: {{ product.rating }}</p>
+        <p>Stock: {{ product.stock }}</p>
+        <p>Brand: {{ product.brand }}</p>
+        <p>Category: {{ product.category }}</p>
+
+        <div *ngIf="editMode">
+            
+            <form (ngSubmit)="saveProductChanges()">
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea id="description" name="description" [(ngModel)]="editedProduct.description" class="form-control"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="price">Price:</label>
+                    <input type="number" id="price" name="price" [(ngModel)]="editedProduct.price" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="discountPercentage">Discount Percentage:</label>
+                    <input type="number" id="discountPercentage" name="discountPercentage" [(ngModel)]="editedProduct.discountPercentage" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="rating">Rating:</label>
+                    <input type="number" id="rating" name="rating" [(ngModel)]="editedProduct.rating" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="stock">Stock:</label>
+                    <input type="number" id="stock" name="stock" [(ngModel)]="editedProduct.stock" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="brand">Brand:</label>
+                    <input type="text" id="brand" name="brand" [(ngModel)]="editedProduct.brand" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="category">Category:</label>
+                    <input type="text" id="category" name="category" [(ngModel)]="editedProduct.category" class="form-control">
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Cancel</button>
+            </form>
+        </div>
+
+        <div *ngIf="!editMode">
+            
+            <button class="btn btn-primary add-to-cart-btn" (click)="addToCart(product)">Add to Cart</button>
+            <a [routerLink]="['/products', product.id, 'edit']" class="btn btn-secondary edit-btn">Edit</a>
+        </div>
+    </div>
+</div>
+
